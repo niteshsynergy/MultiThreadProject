@@ -6,7 +6,14 @@ public class ProducerConsumerExample {
     public static void main(String[] args) {
         ProducerConsumer pc = new ProducerConsumer();
 
-        Thread producer = new Thread(() -> {
+        Thread producer1 = new Thread(() -> {
+            try {
+                pc.produce();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        Thread producer2 = new Thread(() -> {
             try {
                 pc.produce();
             } catch (InterruptedException e) {
@@ -22,7 +29,8 @@ public class ProducerConsumerExample {
             }
         });
 
-        producer.start();
+        producer1.start();
+        producer2.start();
         consumer.start();
     }
 }
@@ -36,7 +44,7 @@ class ProducerConsumer {
         while (true) {
             synchronized (this) {
                 while (list.size() == CAPACITY) {
-                    wait();
+                  wait();
                 }
                 System.out.println("Produced: " + value);
                 list.add(value++);

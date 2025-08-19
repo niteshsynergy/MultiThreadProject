@@ -50,9 +50,11 @@ public class ConcurrentHashMapUsingMultiThread {
         exector.submit(writertask2);
         exector.submit(readertask);
         exector.submit(computeTask);
+
         exector.shutdown();
         exector.awaitTermination(5, TimeUnit.SECONDS); // waits for all tasks to finish
-        System.out.println("Final Map: " + map);    }
+        System.out.println("Final Map: " + map);
+    }
     public static void sleepForTime(int time){
         try {
             Thread.sleep(time);
